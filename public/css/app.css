@@ -117,6 +117,87 @@ a:hover {
     margin-top: 3px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+form label {
+    font-weight: bold;
+    color: #1a252f;
+    font-size: 14px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background: #fafafa;
+    transition: border 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+    border-color: #2980b9;
+    outline: none;
+    background: #fff;
+}
+
+form .btn {
+    margin-top: 5px;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+
+form a.btn {
+    background: #888;
+}
+
+form a.btn:hover {
+    background: #555;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 12px;
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: row;  
+    gap: 10px;
+    margin-top: 5px;
+}
+.form-actions .btn {
+    margin-top: 0;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header .btn {
+    margin-top: 0;
+}
+
 footer {
     color: #606060;
     text-align: center;

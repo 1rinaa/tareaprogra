@@ -2,43 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Author;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    //Metodo para listar todos los libros
     public function index()
     {
-        $books = collect(config('data.books'))
-            ->map(function($book) {
-                $book['publisher'] = collect(config('data.publishers'))
-                    ->firstWhere('id', $book['publisher_id']);
-
-                $book['authors'] = collect(config('data.authors'))
-                    ->filter(fn($a) => in_array($a['id'], $book['author_id']))
-                    ->values()
-                    ->toArray();
-
-                return $book;
-            })->toArray();
-
+        $books = Book::with(['author', 'publisher'])->get();
         return view('books.index', ['books' => $books]);
     }
 
-    //Metodo para mostrar un libro en especifico
     public function show($id)
     {
-        $book = collect(config('data.books'))
-            ->firstWhere('id', (int)$id);
-
-        $book['publisher'] = collect(config('data.publishers'))
-            ->firstWhere('id', $book['publisher_id']);
-
-        $book['authors'] = collect(config('data.authors'))
-            ->filter(fn($a) => in_array($a['id'], $book['author_id']))
-            ->values()
-            ->toArray();
-
+        $book = Book::with(['author', 'publisher'])->findOrFail($id);
         return view('books.show', ['book' => $book]);
+    }
+
+    public function create()
+    {
+        $authors    = Author::all();
+        $publishers = Publisher::all();
+        return view('books.create', compact('authors', 'publishers'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'        => 'required',
+            'edition'      => 'required',
+            'copyright'    => 'required|integer',
+            'language'     => 'required',
+            'pages'        => 'required|integer',
+            'author_id'    => 'required|exists:authors,id',
+            'publisher_id' => 'required|exists:publishers,id',
+        ]);
+
+        Book::create($request->all());
+        return redirect()->route('books.index');
+    }
+
+    public function edit($id)
+    {
+        $book       = Book::findOrFail($id);
+        $authors    = Author::all();
+        $publishers = Publisher::all();
+        return view('books.edit', compact('book', 'authors', 'publishers'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title'        => 'required',
+            'edition'      => 'required',
+            'copyright'    => 'required|integer',
+            'language'     => 'required',
+            'pages'        => 'required|integer',
+            'author_id'    => 'required|exists:authors,id',
+            'publisher_id' => 'required|exists:publishers,id',
+        ]);
+
+        $book = Book::findOrFail($id);
+        $book->update($request->all());
+        return redirect()->route('books.show', $id);
     }
 }

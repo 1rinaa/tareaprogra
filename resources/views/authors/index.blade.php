@@ -3,7 +3,10 @@
 @section('title', 'Authors')
 
 @section('content')
+<div class="page-header">
     <h1>Authors</h1>
+    <a class="btn" href="{{ route('authors.create') }}">+ Add Author</a>
+</div>
 
     <ul>
         @foreach($authors as $author)

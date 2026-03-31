@@ -3,7 +3,10 @@
 @section('title', $publisher['publisher'])
 
 @section('content')
+<div class="page-header">
     <h1>{{ $publisher['publisher'] }}</h1>
+    <a class="btn" href="{{ route('publishers.edit', $publisher->id) }}">Edit Publisher</a>
+</div>
 
     <table class="info-table">
         <tr>

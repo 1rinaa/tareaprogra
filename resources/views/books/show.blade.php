@@ -1,44 +1,52 @@
 @extends('layouts.app')
 
-@section('title', $book['title'])
+@section('title', $book->title)
 
 @section('content')
-    <h1>{{ $book['title'] }}</h1>
+<div class="page-header">
+    <h1>{{ $book->title }}</h1>
+    <a class="btn" href="{{ route('books.edit', $book->id) }}">Edit Book</a>
+</div>
 
     <table class="info-table">
         <tr>
             <td>Edition</td>
-            <td>{{ $book['edition'] }}</td>
+            <td>{{ $book->edition }}</td>
         </tr>
         <tr>
             <td>Copyright</td>
-            <td>{{ $book['copyright'] }}</td>
+            <td>{{ $book->copyright }}</td>
         </tr>
         <tr>
             <td>Language</td>
-            <td>{{ $book['language'] }}</td>
+            <td>{{ $book->language }}</td>
         </tr>
         <tr>
             <td>Pages</td>
-            <td>{{ $book['pages'] }}</td>
+            <td>{{ $book->pages }}</td>
         </tr>
         <tr>
             <td>Publisher</td>
             <td>
-                <a href="{{ route('publishers.show', $book['publisher']['id']) }}">
-                    {{ $book['publisher']['publisher'] }}
-                </a>
+                @if($book->publisher)
+                    <a href="{{ route('publishers.show', $book->publisher->id) }}">
+                        {{ $book->publisher->publisher }}
+                    </a>
+                @else
+                    N/A
+                @endif
             </td>
         </tr>
         <tr>
-            <td>Authors</td>
+            <td>Author</td>
             <td>
-                @foreach($book['authors'] as $author)
-                    <a href="{{ route('authors.show', $author['id']) }}">
-                        {{ $author['author'] }}
+                @if($book->author)
+                    <a href="{{ route('authors.show', $book->author->id) }}">
+                        {{ $book->author->author }}
                     </a>
-                    @if(!$loop->last), @endif
-                @endforeach
+                @else
+                    N/A
+                @endif
             </td>
         </tr>
     </table>

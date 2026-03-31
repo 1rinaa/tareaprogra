@@ -3,7 +3,10 @@
 @section('title', 'Publishers')
 
 @section('content')
+<div class="page-header">
     <h1>Publishers</h1>
+    <a class="btn" href="{{ route('publishers.create') }}">+ Add Publisher</a>
+</div>
 
     <ul>
         @foreach($publishers as $publisher)
