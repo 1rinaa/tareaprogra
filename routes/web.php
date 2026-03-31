@@ -41,7 +41,3 @@ Route::post('/publishers',          [PublisherController::class, 'store'])->name
 Route::get('/publishers/{id}',      [PublisherController::class, 'show'])->name('publishers.show');
 Route::get('/publishers/{id}/edit', [PublisherController::class, 'edit'])->name('publishers.edit');
 Route::put('/publishers/{id}',      [PublisherController::class, 'update'])->name('publishers.update');
-
-Route::resource('books', BookController::class);
-Route::resource('authors', AuthorController::class);
-Route::resource('publishers', PublisherController::class);
